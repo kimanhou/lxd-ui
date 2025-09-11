@@ -817,7 +817,9 @@ const InstanceList: FC = () => {
           </Col>
         </Row>
       </CustomLayout>
-      {panelParams.panel === panels.instanceSummary && <InstanceDetailPanel />}
+      <InstanceDetailPanel
+        isOpen={panelParams.panel === panels.instanceSummary}
+      />
     </>
   );
 };

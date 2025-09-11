@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC } from "react";
 import OpenTerminalBtn from "./actions/OpenTerminalBtn";
 import OpenConsoleBtn from "./actions/OpenConsoleBtn";
 import {
@@ -14,7 +14,11 @@ import InstanceDetailPanelContent from "./InstanceDetailPanelContent";
 import { useInstance } from "context/useInstances";
 import DeleteInstanceBtn from "pages/instances/actions/DeleteInstanceBtn";
 
-const InstanceDetailPanel: FC = () => {
+interface Props {
+  isOpen: boolean;
+}
+
+const InstanceDetailPanel: FC<Props> = ({ isOpen }) => {
   const notify = useNotify();
   const panelParams = usePanelParams();
 
@@ -34,8 +38,9 @@ const InstanceDetailPanel: FC = () => {
       loading={isLoading}
       hasError={!instance}
       className="u-hide--medium u-hide--small detail-panel instance-detail-panel"
-      pinned
       width="narrow"
+      isOpen={isOpen}
+      isAnimated
     >
       <SidePanel.Sticky>
         <SidePanel.Header>
