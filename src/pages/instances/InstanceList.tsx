@@ -423,7 +423,7 @@ const InstanceList: FC = () => {
             className: "u-truncate",
             title: `Instance ${instance.name}`,
             role: "rowheader",
-            style: { width: `${COLUMN_WIDTHS[NAME]}px` },
+            style: { width: `${COLUMN_WIDTHS[NAME]}px`, cursor: "pointer" },
             "aria-label": NAME,
             onClick: openSummary,
           },
@@ -441,7 +441,7 @@ const InstanceList: FC = () => {
             "aria-label": TYPE,
             onClick: openSummary,
             className: "clickable-cell",
-            style: { width: `${COLUMN_WIDTHS[TYPE]}px` },
+            style: { width: `${COLUMN_WIDTHS[TYPE]}px`, cursor: "pointer" },
           },
           ...(isAllProjects
             ? [
@@ -469,7 +469,7 @@ const InstanceList: FC = () => {
             "aria-label": MEMORY,
             onClick: openSummary,
             className: "clickable-cell",
-            style: { width: `${COLUMN_WIDTHS[MEMORY]}px` },
+            style: { width: `${COLUMN_WIDTHS[MEMORY]}px`, cursor: "pointer" },
           },
           {
             content: <InstanceUsageRootFilesystem instance={instance} />,
@@ -477,7 +477,10 @@ const InstanceList: FC = () => {
             "aria-label": FILESYSTEM,
             onClick: openSummary,
             className: "clickable-cell",
-            style: { width: `${COLUMN_WIDTHS[FILESYSTEM]}px` },
+            style: {
+              width: `${COLUMN_WIDTHS[FILESYSTEM]}px`,
+              cursor: "pointer",
+            },
           },
           {
             content: (
@@ -489,7 +492,10 @@ const InstanceList: FC = () => {
             "aria-label": DESCRIPTION,
             onClick: openSummary,
             className: "clickable-cell",
-            style: { width: `${COLUMN_WIDTHS[DESCRIPTION]}px` },
+            style: {
+              width: `${COLUMN_WIDTHS[DESCRIPTION]}px`,
+              cursor: "pointer",
+            },
           },
           {
             key: `ipv4-${ipv4.length}`,
@@ -498,7 +504,7 @@ const InstanceList: FC = () => {
             className: "u-align--right clickable-cell",
             "aria-label": IPV4,
             onClick: openSummary,
-            style: { width: `${COLUMN_WIDTHS[IPV4]}px` },
+            style: { width: `${COLUMN_WIDTHS[IPV4]}px`, cursor: "pointer" },
           },
           {
             key: `ipv6-${ipv6.length}`,
@@ -507,7 +513,7 @@ const InstanceList: FC = () => {
             "aria-label": IPV6,
             onClick: openSummary,
             className: "clickable-cell",
-            style: { width: `${COLUMN_WIDTHS[IPV6]}px` },
+            style: { width: `${COLUMN_WIDTHS[IPV6]}px`, cursor: "pointer" },
           },
           {
             content: instance.snapshots?.length ?? "0",
@@ -515,7 +521,10 @@ const InstanceList: FC = () => {
             className: "u-align--right clickable-cell",
             "aria-label": SNAPSHOTS,
             onClick: openSummary,
-            style: { width: `${COLUMN_WIDTHS[SNAPSHOTS]}px` },
+            style: {
+              width: `${COLUMN_WIDTHS[SNAPSHOTS]}px`,
+              cursor: "pointer",
+            },
           },
           {
             key: instance.status + loadingType,
@@ -524,7 +533,7 @@ const InstanceList: FC = () => {
             className: "clickable-cell",
             "aria-label": STATUS,
             onClick: openSummary,
-            style: { width: `${COLUMN_WIDTHS[STATUS]}px` },
+            style: { width: `${COLUMN_WIDTHS[STATUS]}px`, cursor: "pointer" },
           },
           {
             content: (
