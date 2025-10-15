@@ -214,49 +214,45 @@ const EditInstance: FC<Props> = ({ instance }) => {
 
   return (
     <div className="edit-instance">
-      {/* Move the view switcher to the top */}
-      <nav className="p-tabs yaml-toolbar">
-        <ul className="p-tabs__list" aria-label="Configuration view switcher">
-          <li className="p-tabs__item">
-            <button
-              className="p-tabs__link"
-              type="button"
-              aria-selected={!isYamlView}
-              onClick={() => {
-                updateSection(MAIN_CONFIGURATION);
-              }}
-            >
-              Form
-            </button>
-          </li>
-          <li className="p-tabs__item">
-            <button
-              className="p-tabs__link"
-              type="button"
-              aria-selected={isYamlView && yamlViewMode === "edit"}
-              onClick={() => {
-                updateSection(YAML_CONFIGURATION);
-                setYamlViewMode("edit");
-              }}
-            >
-              YAML
-            </button>
-          </li>
-          <li className="p-tabs__item">
-            <button
-              className="p-tabs__link"
-              type="button"
-              aria-selected={isYamlView && yamlViewMode === "expanded"}
-              onClick={() => {
-                updateSection(YAML_CONFIGURATION);
-                setYamlViewMode("expanded");
-              }}
-            >
-              Expanded YAML
-            </button>
-          </li>
-        </ul>
-      </nav>
+      <div className="p-segmented-control u-align--left yaml-toolbar">
+        <div
+          className="p-segmented-control__list"
+          aria-label="Configuration view switcher"
+        >
+          <button
+            className="p-segmented-control__button"
+            type="button"
+            aria-selected={!isYamlView}
+            onClick={() => {
+              updateSection(MAIN_CONFIGURATION);
+            }}
+          >
+            Form
+          </button>
+          <button
+            className="p-segmented-control__button"
+            type="button"
+            aria-selected={isYamlView && yamlViewMode === "edit"}
+            onClick={() => {
+              updateSection(YAML_CONFIGURATION);
+              setYamlViewMode("edit");
+            }}
+          >
+            YAML
+          </button>
+          <button
+            className="p-segmented-control__button"
+            type="button"
+            aria-selected={isYamlView && yamlViewMode === "expanded"}
+            onClick={() => {
+              updateSection(YAML_CONFIGURATION);
+              setYamlViewMode("expanded");
+            }}
+          >
+            Expanded YAML
+          </button>
+        </div>
+      </div>
       <Form onSubmit={formik.handleSubmit} className="form">
         {!isYamlView && (
           <InstanceFormMenu
