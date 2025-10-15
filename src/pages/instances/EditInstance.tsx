@@ -4,6 +4,7 @@ import {
   Button,
   Col,
   Form,
+  Notification,
   Row,
   useListener,
   useToastNotification,
@@ -60,7 +61,6 @@ import type { MigrationFormValues } from "components/forms/MigrationForm";
 import MigrationForm from "components/forms/MigrationForm";
 import GPUDeviceForm from "components/forms/GPUDeviceForm";
 import OtherDeviceForm from "components/forms/OtherDeviceForm";
-import YamlSwitch from "components/forms/YamlSwitch";
 import YamlNotification from "components/forms/YamlNotification";
 import ProxyDeviceForm from "components/forms/ProxyDeviceForm";
 import FormSubmitBtn from "components/forms/FormSubmitBtn";
@@ -112,6 +112,8 @@ const EditInstance: FC<Props> = ({ instance }) => {
   const [version, setVersion] = useState(0);
   const { canEditInstance } = useInstanceEntitlements();
 
+  const [yamlViewMode, setYamlViewMode] = useState<"edit" | "expanded">("edit");
+
   if (!project) {
     return <>Missing project</>;
   }
@@ -121,7 +123,7 @@ const EditInstance: FC<Props> = ({ instance }) => {
   const updateFormHeight = () => {
     updateMaxHeight("form-contents", "p-bottom-controls");
   };
-  useEffect(updateFormHeight, [section]);
+  useEffect(updateFormHeight, [section, yamlViewMode]); // Rerun on view mode change too
   useListener(window, updateFormHeight, "resize", true);
 
   const editRestriction = canEditInstance(instance)
@@ -139,7 +141,6 @@ const EditInstance: FC<Props> = ({ instance }) => {
           : getInstancePayload(instance, values)
       ) as LxdInstance;
 
-      // ensure the etag is set (it is missing on the yaml)
       instancePayload.etag = instance.etag;
       const instanceLink = <InstanceLinkChip instance={instance} />;
 
@@ -201,12 +202,63 @@ const EditInstance: FC<Props> = ({ instance }) => {
     return objectToYaml(bareInstance);
   };
 
+  const getExpandedYaml = () => {
+    if (!instance.expanded_config) {
+      return "# Expanded configuration not available.";
+    }
+    return objectToYaml(instance.expanded_config);
+  };
+
   const readOnly = formik.values.readOnly;
+  const isYamlView = section === slugify(YAML_CONFIGURATION);
 
   return (
     <div className="edit-instance">
+      {/* Move the view switcher to the top */}
+      <nav className="p-tabs yaml-toolbar">
+        <ul className="p-tabs__list" aria-label="Configuration view switcher">
+          <li className="p-tabs__item">
+            <button
+              className="p-tabs__link"
+              type="button"
+              aria-selected={!isYamlView}
+              onClick={() => {
+                updateSection(MAIN_CONFIGURATION);
+              }}
+            >
+              Form
+            </button>
+          </li>
+          <li className="p-tabs__item">
+            <button
+              className="p-tabs__link"
+              type="button"
+              aria-selected={isYamlView && yamlViewMode === "edit"}
+              onClick={() => {
+                updateSection(YAML_CONFIGURATION);
+                setYamlViewMode("edit");
+              }}
+            >
+              YAML
+            </button>
+          </li>
+          <li className="p-tabs__item">
+            <button
+              className="p-tabs__link"
+              type="button"
+              aria-selected={isYamlView && yamlViewMode === "expanded"}
+              onClick={() => {
+                updateSection(YAML_CONFIGURATION);
+                setYamlViewMode("expanded");
+              }}
+            >
+              Expanded YAML
+            </button>
+          </li>
+        </ul>
+      </nav>
       <Form onSubmit={formik.handleSubmit} className="form">
-        {section !== slugify(YAML_CONFIGURATION) && (
+        {!isYamlView && (
           <InstanceFormMenu
             active={section ?? slugify(MAIN_CONFIGURATION)}
             setActive={updateSection}
@@ -217,84 +269,87 @@ const EditInstance: FC<Props> = ({ instance }) => {
         )}
         <Row className="form-contents" key={section}>
           <Col size={12}>
-            {section !== slugify(YAML_CONFIGURATION) && (
-              <InstanceProfilesWarning
-                instanceProfiles={instance.profiles}
-                profiles={profiles}
-              />
-            )}
-            {(section === slugify(MAIN_CONFIGURATION) || !section) && (
-              <EditInstanceDetails formik={formik} project={project} />
-            )}
-
-            {section === slugify(DISK_DEVICES) && (
-              <DiskDeviceForm formik={formik} project={project} />
-            )}
-
-            {section === slugify(NETWORK_DEVICES) && (
-              <NetworkDevicesForm formik={formik} project={project} />
-            )}
-
-            {section === slugify(GPU_DEVICES) && (
-              <GPUDeviceForm formik={formik} project={project} />
-            )}
-
-            {section === slugify(PROXY_DEVICES) && (
-              <ProxyDeviceForm formik={formik} project={project} />
-            )}
-
-            {section === slugify(OTHER_DEVICES) && (
-              <OtherDeviceForm formik={formik} project={project} />
-            )}
-
-            {section === slugify(RESOURCE_LIMITS) && (
-              <ResourceLimitsForm formik={formik} />
-            )}
-
-            {section === slugify(SECURITY_POLICIES) && (
-              <SecurityPoliciesForm formik={formik} />
-            )}
-
-            {section === slugify(SNAPSHOTS) && (
-              <InstanceSnapshotsForm formik={formik} />
-            )}
-
-            {section === slugify(MIGRATION) && (
-              <MigrationForm formik={formik} />
-            )}
-
-            {section === slugify(BOOT) && <BootForm formik={formik} />}
-
-            {section === slugify(CLOUD_INIT) && (
-              <CloudInitForm key={`yaml-form-${version}`} formik={formik} />
-            )}
-
-            {section === slugify(YAML_CONFIGURATION) && (
-              <YamlForm
-                key={`yaml-form-${version}`}
-                yaml={getYaml()}
-                setYaml={(yaml) => {
-                  ensureEditMode(formik);
-                  formik.setFieldValue("yaml", yaml);
-                }}
-                readOnly={!!formik.values.editRestriction}
-                readOnlyMessage={formik.values.editRestriction}
-              >
-                <YamlNotification
-                  entity="instance"
-                  href={`${docBaseLink}/instances`}
+            {!isYamlView && (
+              <>
+                <InstanceProfilesWarning
+                  instanceProfiles={instance.profiles}
+                  profiles={profiles}
                 />
-              </YamlForm>
+                {(section === slugify(MAIN_CONFIGURATION) || !section) && (
+                  <EditInstanceDetails formik={formik} project={project} />
+                )}
+                {section === slugify(DISK_DEVICES) && (
+                  <DiskDeviceForm formik={formik} project={project} />
+                )}
+                {section === slugify(NETWORK_DEVICES) && (
+                  <NetworkDevicesForm formik={formik} project={project} />
+                )}
+                {section === slugify(GPU_DEVICES) && (
+                  <GPUDeviceForm formik={formik} project={project} />
+                )}
+                {section === slugify(PROXY_DEVICES) && (
+                  <ProxyDeviceForm formik={formik} project={project} />
+                )}
+                {section === slugify(OTHER_DEVICES) && (
+                  <OtherDeviceForm formik={formik} project={project} />
+                )}
+                {section === slugify(RESOURCE_LIMITS) && (
+                  <ResourceLimitsForm formik={formik} />
+                )}
+                {section === slugify(SECURITY_POLICIES) && (
+                  <SecurityPoliciesForm formik={formik} />
+                )}
+                {section === slugify(SNAPSHOTS) && (
+                  <InstanceSnapshotsForm formik={formik} />
+                )}
+                {section === slugify(MIGRATION) && (
+                  <MigrationForm formik={formik} />
+                )}
+                {section === slugify(BOOT) && <BootForm formik={formik} />}
+                {section === slugify(CLOUD_INIT) && (
+                  <CloudInitForm key={`yaml-form-${version}`} formik={formik} />
+                )}
+              </>
+            )}
+
+            {isYamlView && (
+              <>
+                {yamlViewMode === "edit" ? (
+                  <YamlForm
+                    key={`yaml-form-edit-${version}`}
+                    yaml={getYaml()}
+                    setYaml={(yaml) => {
+                      ensureEditMode(formik);
+                      formik.setFieldValue("yaml", yaml);
+                    }}
+                    readOnly={!!formik.values.editRestriction}
+                    readOnlyMessage={formik.values.editRestriction}
+                  >
+                    <YamlNotification
+                      entity="instance"
+                      href={`${docBaseLink}/instances`}
+                    />
+                  </YamlForm>
+                ) : (
+                  <YamlForm
+                    key={`yaml-form-expanded-${version}`}
+                    yaml={getExpandedYaml()}
+                    readOnly={true}
+                  >
+                    <Notification severity="information" title="Read-only View">
+                      This is the expanded configuration, which includes all
+                      inherited properties. To make changes, please switch back
+                      to the YAML view.
+                    </Notification>
+                  </YamlForm>
+                )}
+              </>
             )}
           </Col>
         </Row>
       </Form>
       <FormFooterLayout>
-        <YamlSwitch
-          formik={formik}
-          section={section}
-          setSection={updateSection}
-        />
+        {/* The view switcher is no longer here */}
         {readOnly ? null : (
           <>
             <Button
@@ -306,12 +361,15 @@ const EditInstance: FC<Props> = ({ instance }) => {
             >
               Cancel
             </Button>
-            <FormSubmitBtn
-              formik={formik}
-              baseUrl={baseUrl}
-              isYaml={section === slugify(YAML_CONFIGURATION)}
-              disabled={hasDiskError(formik) || hasNetworkError(formik)}
-            />
+            {/* Hide submit button in expanded view */}
+            {yamlViewMode !== "expanded" && (
+              <FormSubmitBtn
+                formik={formik}
+                baseUrl={baseUrl}
+                isYaml={isYamlView}
+                disabled={hasDiskError(formik) || hasNetworkError(formik)}
+              />
+            )}
           </>
         )}
       </FormFooterLayout>
