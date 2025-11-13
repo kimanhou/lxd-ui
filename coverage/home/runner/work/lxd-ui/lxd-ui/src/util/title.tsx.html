@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">58.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>17/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">89.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/11</span>
+                <span class='fraction'>17/19</span>
             </div>
         
             
@@ -74,26 +74,50 @@
 <a name='L9'></a><a href='#L9'>9</a>
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">270x</span>
-<span class="cline-any cline-yes">270x</span>
-<span class="cline-any cline-yes">270x</span>
-<span class="cline-any cline-yes">270x</span>
-<span class="cline-any cline-yes">4803x</span>
-<span class="cline-any cline-yes">4803x</span>
-<span class="cline-any cline-yes">4803x</span>
-<span class="cline-any cline-yes">549x</span>
-<span class="cline-any cline-yes">549x</span>
-<span class="cline-any cline-yes">4803x</span>
-<span class="cline-any cline-yes">4803x</span>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">307x</span>
+<span class="cline-any cline-yes">307x</span>
+<span class="cline-any cline-yes">307x</span>
+<span class="cline-any cline-yes">307x</span>
+<span class="cline-any cline-yes">307x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">5171x</span>
+<span class="cline-any cline-yes">5171x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect } from "react"<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >;</span></span>
 import { useSettings } from "context/useSettings";
+import { hasMicroCloudFlag } from "util/settings";
 &nbsp;
 export const setTitle = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(): void =&gt; {</span></span>
   const { data: settings } = <span class="cstat-no" title="statement not covered" >useSettings();</span>
+  const isMicroCloud = <span class="cstat-no" title="statement not covered" >hasMicroCloudFlag(settings);</span>
+  const suffix = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >isMicroCloud ? "MicroCloud" : "</span>LXD UI";</span>
+&nbsp;
+  const favicon = <span class="cstat-no" title="statement not covered" >document.querySelector("link[rel='shortcut icon']");</span>
+<span class="cstat-no" title="statement not covered" >  if (favicon &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >isMicroCloud) <span class="branch-0 cbranch-no" title="branch not covered" >{</span></span></span>
+<span class="cstat-no" title="statement not covered" >    (<span class="cstat-no" title="statement not covered" >favicon as HTMLLinkElement).href = "/assets/img/microCloud-32x32.png";</span></span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(() =&gt; {</span>
     const host = <span class="cstat-no" title="statement not covered" >settings?.config?.["user.ui_title"] ?? <span class="branch-1 cbranch-no" title="branch not covered" >location.hostname;</span></span>
-<span class="cstat-no" title="statement not covered" >    document.title = `${host} | LXD UI`;</span>
+<span class="cstat-no" title="statement not covered" >    document.title = `${host} | ${suffix}`;</span>
   }, [settings?.config]);
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -103,7 +127,7 @@ export const setTitle = <span class="cstat-no" title="statement not covered" ><s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-27T15:09:17.199Z
+                at 2025-11-13T17:19:15.984Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>

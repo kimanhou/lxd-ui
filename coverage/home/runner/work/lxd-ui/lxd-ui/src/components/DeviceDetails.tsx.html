@@ -136,43 +136,43 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
 <span class="cline-any cline-yes">187x</span>
 <span class="cline-any cline-yes">179x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">165x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">179x</span>
 <span class="cline-any cline-yes">179x</span>
 <span class="cline-any cline-yes">179x</span>
@@ -207,8 +207,8 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">75x</span>
-<span class="cline-any cline-yes">75x</span>
+<span class="cline-any cline-yes">77x</span>
+<span class="cline-any cline-yes">77x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { FC } from "react";
 import { isRootDisk } from "util/instanceValidation";
 import type { FormDevice } from "util/formDevices";
@@ -228,7 +228,7 @@ const DeviceDetails: FC&lt;Props&gt; = <span class="cstat-no" title="statement n
         &lt;&gt;
           Pool{" "}
           &lt;ResourceLink
-            type={"pool"}
+            type="pool"
             value={device.<span class="branch-0 cbranch-no" title="branch not covered" >pool || ""}</span>
             to={`/ui/project/${encodeURIComponent(project)}/storage/pool/${encodeURIComponent(device.<span class="branch-0 cbranch-no" title="branch not covered" >pool ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span></span>}`}
           /&gt;
@@ -244,13 +244,13 @@ const DeviceDetails: FC&lt;Props&gt; = <span class="cstat-no" title="statement n
       &lt;&gt;
         Volume{" "}
         &lt;ResourceLink
-          type={"volume"}
+          type="volume"
           value={device.source as string}
           to={`/ui/project/${encodeURIComponent(project)}/storage/pool/${encodeURIComponent(device.<span class="branch-0 cbranch-no" title="branch not covered" >pool ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span></span>}/volumes/custom/${encodeURIComponent(device.<span class="branch-0 cbranch-no" title="branch not covered" >source ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span></span>}`}
         /&gt;{" "}
         on pool{" "}
         &lt;ResourceLink
-          type={"pool"}
+          type="pool"
           value={device.<span class="branch-0 cbranch-no" title="branch not covered" >pool || ""}</span>
           to={`/ui/project/${encodeURIComponent(project)}/storage/pool/${encodeURIComponent(device.<span class="branch-0 cbranch-no" title="branch not covered" >pool ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span></span>}`}
         /&gt;
@@ -289,7 +289,7 @@ export default DeviceDetails;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-27T15:09:17.199Z
+                at 2025-11-13T17:19:15.984Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>
