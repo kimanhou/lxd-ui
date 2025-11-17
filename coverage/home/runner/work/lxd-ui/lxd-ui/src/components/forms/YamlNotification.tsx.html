@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.08% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/67</span>
+                <span class='fraction'>56/68</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/52</span>
+                <span class='fraction'>53/53</span>
             </div>
         
             
@@ -115,16 +115,17 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">129x</span>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
-<span class="cline-any cline-yes">263x</span>
-<span class="cline-any cline-yes">263x</span>
-<span class="cline-any cline-yes">263x</span>
+<span class="cline-any cline-yes">261x</span>
+<span class="cline-any cline-yes">261x</span>
+<span class="cline-any cline-yes">261x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -136,13 +137,13 @@
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
-<span class="cline-any cline-yes">263x</span>
-<span class="cline-any cline-yes">263x</span>
-<span class="cline-any cline-yes">263x</span>
+<span class="cline-any cline-yes">261x</span>
+<span class="cline-any cline-yes">261x</span>
+<span class="cline-any cline-yes">261x</span>
 <span class="cline-any cline-yes">250x</span>
 <span class="cline-any cline-yes">250x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -150,21 +151,22 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-yes">129x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { FC } from "react";
@@ -208,12 +210,13 @@ const YamlNotification: FC&lt;Props&gt; = <span class="fstat-no" title="function
       severity="information"
       title="YAML Configuration"
       onDismiss={handleClose}
+      actions={[
+        &lt;DocLink docPath={docPath} key="learn-more-link"&gt;
+          Learn more about {pluralize(entity, 2)}
+        &lt;/DocLink&gt;,
+      ]}
     &gt;
       This is the YAML representation of the {entity}.
-      &lt;br /&gt;
-      &lt;DocLink docPath={docPath}&gt;
-        Learn more about {pluralize(entity, 2)}
-      &lt;/DocLink&gt;
     &lt;/Notification&gt;
   );
 };
@@ -226,7 +229,7 @@ export default YamlNotification;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-17T13:01:17.010Z
+                at 2025-11-17T13:28:24.001Z
             </div>
         <script src="../../../../../../../../prettify.js"></script>
         <script>
