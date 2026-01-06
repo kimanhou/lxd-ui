@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.28% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/35</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -96,39 +96,39 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">1266x</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">66x</span>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">1260x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { FC, ReactNode } from "react";
 import { AppMain, Panel } from "@canonical/react-components";
 &nbsp;
@@ -140,14 +140,14 @@ interface Props {
   contentClassName?: string;
 }
 &nbsp;
-const BaseLayout: FC&lt;Props&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
+const BaseLayout: FC&lt;Props&gt; = ({
   title,
   controls,
   children,
   mainClassName,
   contentClassName,
 }: Props) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;AppMain className={mainClassName} id="main-content"&gt;
       &lt;Panel
         title={title}
@@ -169,7 +169,7 @@ export default BaseLayout;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-19T15:37:11.186Z
+                at 2026-01-06T09:44:18.917Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>
