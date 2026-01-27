@@ -12,9 +12,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "context/auth";
 import { useSettings } from "context/useSettings";
 import { ROOT_PATH } from "util/rootPath";
+import type { AuthMethod } from "util/authentication";
+import { isPermanentAuthMethod } from "util/authentication";
 
 const CertificateGenerate: FC = () => {
-  const { isAuthenticated, isAuthLoading } = useAuth();
+  const { isAuthenticated, isAuthLoading, authMethod } = useAuth();
   const navigate = useNavigate();
   const { data: settings } = useSettings();
   const hasCertificate = settings?.client_certificate;
@@ -23,7 +25,7 @@ const CertificateGenerate: FC = () => {
     return <Spinner className="u-loader" text="Loading..." isMainComponent />;
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && isPermanentAuthMethod(authMethod as AuthMethod)) {
     return <Navigate to={`${ROOT_PATH}/ui`} replace={true} />;
   }
 

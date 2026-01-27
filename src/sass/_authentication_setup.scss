@@ -1,0 +1,67 @@
+.p-panel:has(> .p-panel__content.authentication-setup:first-child) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .authentication-setup {
+    margin-top: -4rem;
+
+    .p-notification--caution {
+      margin: 0.5rem auto 2rem;
+      width: fit-content;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .auth-setup-cards-container {
+      display: flex;
+      gap: $sph--x-large;
+      justify-content: center;
+      padding: 0 $sph--x-large;
+
+      .auth-setup-card {
+        background-color: var(--vf-color-background-active);
+        border: none;
+        border-radius: 4px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        max-width: 24rem;
+
+        .p-card__content {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+
+          .auth-setup-icon {
+            height: 4rem;
+            margin-top: $spv--medium;
+            opacity: 0.25;
+            width: 100%;
+          }
+
+          h2 {
+            text-align: center;
+          }
+
+          .auth-setup-link {
+            margin-top: auto;
+            width: 100%;
+
+            &:not(.p-button--positive) {
+              &:not(:hover) {
+                &:not(:focus) {
+                  &:not(:active) {
+                    background-color: transparent;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
