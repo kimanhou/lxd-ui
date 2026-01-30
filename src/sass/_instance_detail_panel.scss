@@ -13,6 +13,10 @@
   .p-panel__content {
     margin-left: 0;
     padding-top: 0;
+
+    .test-canonical {
+      color: var(--tmp-color-palette-red-6);
+    }
   }
 
   .base-image,
