@@ -1,6 +1,7 @@
 @charset "UTF-8";
 @use "sass:map";
 @import "settings";
+@import "@canonical/styles/src";
 @import "vanilla-framework/scss/build";
 @import "./breakpoints";
 @import "pattern_icon";

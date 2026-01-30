@@ -48,7 +48,7 @@ const InstanceDetailPanelContent: FC<Props> = ({ instance }) => {
     <table className="u-table-layout--auto u-no-margin--bottom">
       <tbody>
         <tr>
-          <th className="u-text--muted">Name</th>
+          <th className="u-text--muted test-canonical">Name</th>
           <td>
             <InstanceLink instance={instance} />
           </td>
