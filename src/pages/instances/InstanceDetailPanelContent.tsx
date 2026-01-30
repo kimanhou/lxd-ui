@@ -21,6 +21,7 @@ import NetworkRichChip from "pages/networks/NetworkRichChip";
 import ExpandableList from "components/ExpandableList";
 import ClusterMemberRichChip from "pages/cluster/ClusterMemberRichChip";
 import StoragePoolRichChip from "pages/storage/StoragePoolRichChip";
+import { Button } from "@canonical/react-ds-global";
 
 const RECENT_SNAPSHOT_LIMIT = 5;
 
@@ -50,6 +51,7 @@ const InstanceDetailPanelContent: FC<Props> = ({ instance }) => {
         <tr>
           <th className="u-text--muted test-canonical">Name</th>
           <td>
+            <Button>Click me</Button>
             <InstanceLink instance={instance} />
           </td>
         </tr>
