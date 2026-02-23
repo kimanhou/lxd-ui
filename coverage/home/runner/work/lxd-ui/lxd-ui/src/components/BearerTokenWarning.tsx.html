@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/util/seconds.tsx</title>
+    <title>Code coverage report for home/runner/work/lxd-ui/lxd-ui/src/components/BearerTokenWarning.tsx</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../../../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/util</a> seconds.tsx</h1>
+        <h1><a href="../../../../../../../index.html">All files</a> / <a href="index.html">home/runner/work/lxd-ui/lxd-ui/src/components</a> BearerTokenWarning.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.24% </span>
+                <span class="strong">32.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/29</span>
+                <span class='fraction'>10/31</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.24% </span>
+                <span class="strong">32.25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/29</span>
+                <span class='fraction'>10/31</span>
             </div>
         
             
@@ -92,9 +92,16 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -116,40 +123,39 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { pluralize } from "util/instanceBulkActions";
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-yes">345x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Link } from "react-router-dom";
+import { Icon } from "@canonical/react-components";
+import { getExpiryMessage } from "util/seconds";
+import { useSecondsLeft } from "context/useSecondsLeft";
+import { useAuth } from "context/auth";
+import { ROOT_PATH } from "util/rootPath";
 &nbsp;
-export const formatSeconds = (seconds<span class="fstat-no" title="function not covered" >: number): string =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  let result = "";</span>
+const BearerTokenWarning: React.FC = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const { authExpiresAt } = useAuth();</span>
+<span class="cstat-no" title="statement not covered" >  const secondsLeft = useSecondsLeft(authExpiresAt);</span>
+<span class="cstat-no" title="statement not covered" >  const expiryMessage = getExpiryMessage(secondsLeft);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  if (seconds % 60 &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >    result = `${seconds % 60} ${pluralize("second", seconds % 60)}`;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const minutes = Math.floor(seconds / 60) % 60;</span>
-<span class="cstat-no" title="statement not covered" >  if (minutes &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >    const suffix = result ? `, ${result}` : "";</span>
-<span class="cstat-no" title="statement not covered" >    result = `${minutes} ${pluralize("minute", minutes)}${suffix}`;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const hours = Math.floor(seconds / 60 / 60) % 24;</span>
-<span class="cstat-no" title="statement not covered" >  if (hours &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >    const suffix = result ? `, ${result}` : "";</span>
-<span class="cstat-no" title="statement not covered" >    result = `${hours} ${pluralize("hour", hours)}${suffix}`;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const days = Math.floor(seconds / 60 / 60 / 24);</span>
-<span class="cstat-no" title="statement not covered" >  if (days &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >    const suffix = result ? `, ${result}` : "";</span>
-<span class="cstat-no" title="statement not covered" >    result = `${days} ${pluralize("day", days)}${suffix}`;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-  return result;
-};
+<span class="cstat-no" title="statement not covered" >  return (</span>
+<span class="cstat-no" title="statement not covered" >    &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;Icon name="warning" /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      {expiryMessage &amp;&amp; (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;span className="u-margin-left--small u-hide--medium u-hide--small"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          {expiryMessage}</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >      )}</span>
+<span class="cstat-no" title="statement not covered" >      &lt;Link</span>
+<span class="cstat-no" title="statement not covered" >        to={`${ROOT_PATH}/ui/authentication-setup`}</span>
+<span class="cstat-no" title="statement not covered" >        className="u-text--link u-margin-left--small"</span>
+<span class="cstat-no" title="statement not covered" >      &gt;</span>
+<span class="cstat-no" title="statement not covered" >        Set up permanent access</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/Link&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >  );</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;
+export default BearerTokenWarning;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -157,16 +163,16 @@ export const formatSeconds = (seconds<span class="fstat-no" title="function not 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-20T17:14:46.046Z
+                at 2026-02-23T09:31:44.337Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../../../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../../../../../sorter.js"></script>
+        <script src="../../../../../../../block-navigation.js"></script>
     </body>
 </html>
     
