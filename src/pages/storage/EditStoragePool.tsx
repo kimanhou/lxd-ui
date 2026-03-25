@@ -32,6 +32,8 @@ import FormSubmitBtn from "components/forms/FormSubmitBtn";
 import { useStoragePoolEntitlements } from "util/entitlements/storage-pools";
 import { usePoolFromClusterMembers } from "context/useStoragePools";
 import StoragePoolRichChip from "./StoragePoolRichChip";
+import { useSupportedFeatures } from "context/useSupportedFeatures";
+import { useEventQueue } from "context/eventQueue";
 
 interface Props {
   pool: LxdStoragePool;
@@ -51,6 +53,8 @@ const EditStoragePool: FC<Props> = ({ pool }) => {
   const { data: clusterMembers = [] } = useClusterMembers();
   const [version, setVersion] = useState(0);
   const { canEditPool } = useStoragePoolEntitlements();
+  const { hasStorageAndNetworkOperations } = useSupportedFeatures();
+  const eventQueue = useEventQueue();
 
   if (!project) {
     return <>Missing project</>;
@@ -82,6 +86,40 @@ const EditStoragePool: FC<Props> = ({ pool }) => {
     ? undefined
     : "You do not have permission to edit this pool";
 
+  const notifySuccess = (poolName: string) => {
+    toastNotify.success(
+      <>
+        Storage pool{" "}
+        <StoragePoolRichChip poolName={poolName} projectName={project} />{" "}
+        updated.
+      </>,
+    );
+  };
+
+  const onSuccess = (
+    storagePoolName: string,
+    values: StoragePoolFormValues,
+  ) => {
+    queryClient.invalidateQueries({
+      queryKey: [queryKeys.storage],
+      predicate: (query) =>
+        query.queryKey[0] === queryKeys.volumes ||
+        query.queryKey[0] === queryKeys.storage,
+    });
+    if (pool.driver === cephDriver && values.ceph_rbd_du === "false") {
+      // Clear the storage volume sizes from the cache. The sizes are not available
+      // after disabling `ceph_rbd_du` and the volume state queries will fail. So we
+      // remove the queries to avoid serving the size from a stale cache.
+      queryClient.removeQueries({
+        predicate: (query) =>
+          query.queryKey[0] === queryKeys.storage &&
+          query.queryKey[1] === pool.name,
+      });
+    }
+    formik.setSubmitting(false);
+    notifySuccess(storagePoolName);
+  };
+
   const formik = useFormik<StoragePoolFormValues>({
     initialValues: toStoragePoolFormValues(
       pool,
@@ -108,39 +146,44 @@ const EditStoragePool: FC<Props> = ({ pool }) => {
           : async () => updatePool(savedPool);
 
       mutation()
-        .then(() => {
-          toastNotify.success(
-            <>
-              Storage pool{" "}
-              <StoragePoolRichChip
-                poolName={savedPool.name}
-                projectName={project}
-              />{" "}
-              updated.
-            </>,
-          );
+        .then((operation) => {
+          if (hasStorageAndNetworkOperations) {
+            toastNotify.info(
+              <>
+                Update of storage pool{" "}
+                <StoragePoolRichChip
+                  poolName={savedPool.name}
+                  projectName={project}
+                />{" "}
+                has started.
+              </>,
+            );
+            eventQueue.set(
+              operation.metadata.id,
+              () => {
+                onSuccess(savedPool.name, values);
+              },
+              (msg) => {
+                queryClient.invalidateQueries({
+                  queryKey: [queryKeys.storage],
+                  predicate: (query) =>
+                    query.queryKey[0] === queryKeys.volumes ||
+                    query.queryKey[0] === queryKeys.storage,
+                });
+                formik.setSubmitting(false);
+                toastNotify.failure(
+                  `Update of storage pool ${savedPool.name} failed`,
+                  new Error(msg),
+                );
+              },
+            );
+          } else {
+            onSuccess(savedPool.name, values);
+          }
         })
         .catch((e) => {
-          notify.failure("Storage pool update failed", e);
-        })
-        .finally(() => {
           formik.setSubmitting(false);
-          queryClient.invalidateQueries({
-            queryKey: [queryKeys.storage],
-            predicate: (query) =>
-              query.queryKey[0] === queryKeys.volumes ||
-              query.queryKey[0] === queryKeys.storage,
-          });
-          if (pool.driver === cephDriver && values.ceph_rbd_du === "false") {
-            // Clear the storage volume sizes from the cache. The sizes are not available
-            // after disabling `ceph_rbd_du` and the volume state queries will fail. So we
-            // remove the queries to avoid serving the size from a stale cache.
-            queryClient.removeQueries({
-              predicate: (query) =>
-                query.queryKey[0] === queryKeys.storage &&
-                query.queryKey[1] === pool.name,
-            });
-          }
+          notify.failure("Storage pool update failed", e);
         });
     },
   });
