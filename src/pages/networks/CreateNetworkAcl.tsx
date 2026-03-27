@@ -31,6 +31,8 @@ import NetworkAclForm, {
 } from "pages/networks/forms/NetworkAclForm";
 import { createNetworkAcl } from "api/network-acls";
 import type { LxdNetworkAcl } from "types/network";
+import { useSupportedFeatures } from "context/useSupportedFeatures";
+import { useEventQueue } from "context/eventQueue";
 
 const CreateNetworkAcl: FC = () => {
   const navigate = useNavigate();
@@ -40,6 +42,8 @@ const CreateNetworkAcl: FC = () => {
   const { project } = useParams<{ project: string }>();
   const [section, setSection] = useState(slugify(GENERAL));
   const controllerState = useState<AbortController | null>(null);
+  const { hasStorageAndNetworkOperations } = useSupportedFeatures();
+  const eventQueue = useEventQueue();
 
   if (!project) {
     return <>Missing project</>;
@@ -55,6 +59,23 @@ const CreateNetworkAcl: FC = () => {
       )
       .required("ACL name is required"),
   });
+
+  const getAclUrl = (aclName: string) =>
+    `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acl/${encodeURIComponent(aclName)}`;
+
+  const notifySuccess = (aclName: string) => {
+    toastNotify.success(
+      <>
+        Network ACL{" "}
+        <ResourceLink
+          type="network-acl"
+          value={aclName}
+          to={getAclUrl(aclName)}
+        />{" "}
+        created.
+      </>,
+    );
+  };
 
   const formik = useFormik<NetworkAclFormValues>({
     initialValues: {
@@ -72,28 +93,43 @@ const CreateNetworkAcl: FC = () => {
         : toNetworkAcl(formik.values);
 
       createNetworkAcl(networkAcl, project)
-        .then(() => {
+        .then((operation) => {
           queryClient.invalidateQueries({
             queryKey: [queryKeys.projects, project, queryKeys.networkAcls],
           });
           navigate(
             `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acls`,
           );
-          toastNotify.success(
-            <>
-              Network ACL{" "}
-              <ResourceLink
-                type="network-acl"
-                value={values.name}
-                to={`${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acl/${encodeURIComponent(values.name)}`}
-              />{" "}
-              created.
-            </>,
-          );
+          if (hasStorageAndNetworkOperations) {
+            toastNotify.info(
+              <>
+                Creation of Network ACL{" "}
+                <ResourceLink
+                  type="network-acl"
+                  value={networkAcl.name}
+                  to={getAclUrl(networkAcl.name)}
+                />{" "}
+                has started.
+              </>,
+            );
+            eventQueue.set(
+              operation.metadata.id,
+              () => {
+                notifySuccess(networkAcl.name);
+              },
+              (msg) =>
+                toastNotify.failure(
+                  `Creation of network ACL ${networkAcl.name} failed`,
+                  new Error(msg),
+                ),
+            );
+          } else {
+            notifySuccess(networkAcl.name);
+          }
         })
         .catch((e) => {
           formik.setSubmitting(false);
-          notify.failure("Network ACL creation failed", e);
+          notify.failure("Creation of network ACL failed", e);
         });
     },
   });

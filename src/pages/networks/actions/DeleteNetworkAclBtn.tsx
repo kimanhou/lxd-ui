@@ -16,6 +16,8 @@ import classnames from "classnames";
 import { useNetworkAclEntitlements } from "util/entitlements/network-acls";
 import { deleteNetworkAcl } from "api/network-acls";
 import { ROOT_PATH } from "util/rootPath";
+import { useSupportedFeatures } from "context/useSupportedFeatures";
+import { useEventQueue } from "context/eventQueue";
 
 interface Props {
   networkAcl: LxdNetworkAcl;
@@ -30,11 +32,23 @@ const DeleteNetworkAclBtn: FC<Props> = ({ networkAcl, project }) => {
   const navigate = useNavigate();
   const isSmallScreen = useIsScreenBelow();
   const { canDeleteNetworkAcl } = useNetworkAclEntitlements();
+  const { hasStorageAndNetworkOperations } = useSupportedFeatures();
+  const eventQueue = useEventQueue();
+
+  const notifySuccess = () => {
+    toastNotify.success(
+      <>
+        Network ACL{" "}
+        <ResourceLabel bold type="network-acl" value={networkAcl.name} />{" "}
+        deleted.
+      </>,
+    );
+  };
 
   const handleDelete = () => {
     setLoading(true);
     deleteNetworkAcl(networkAcl.name, project)
-      .then(() => {
+      .then((operation) => {
         queryClient.invalidateQueries({
           predicate: (query) =>
             query.queryKey[0] === queryKeys.projects &&
@@ -44,17 +58,32 @@ const DeleteNetworkAclBtn: FC<Props> = ({ networkAcl, project }) => {
         navigate(
           `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acls`,
         );
-        toastNotify.success(
-          <>
-            Network ACL{" "}
-            <ResourceLabel bold type="network-acl" value={networkAcl.name} />{" "}
-            deleted.
-          </>,
-        );
+        if (hasStorageAndNetworkOperations) {
+          toastNotify.info(
+            <>
+              Deletion of Network ACL{" "}
+              <ResourceLabel bold type="network-acl" value={networkAcl.name} />{" "}
+              has started.
+            </>,
+          );
+          eventQueue.set(
+            operation.metadata.id,
+            () => {
+              notifySuccess();
+            },
+            (msg) =>
+              toastNotify.failure(
+                `Deletion of network ACL ${networkAcl.name} failed`,
+                new Error(msg),
+              ),
+          );
+        } else {
+          notifySuccess();
+        }
       })
       .catch((e) => {
         setLoading(false);
-        notify.failure("ACL deletion failed", e);
+        notify.failure("Deletion of network ACL failed", e);
       });
   };
 

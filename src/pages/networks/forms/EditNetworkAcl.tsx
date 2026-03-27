@@ -27,6 +27,8 @@ import { updateNetworkAcl } from "api/network-acls";
 import { objectToYaml, yamlToObject } from "util/yaml";
 import { useNetworkAclEntitlements } from "util/entitlements/network-acls";
 import { ROOT_PATH } from "util/rootPath";
+import { useSupportedFeatures } from "context/useSupportedFeatures";
+import { useEventQueue } from "context/eventQueue";
 
 interface Props {
   networkAcl: LxdNetworkAcl;
@@ -39,6 +41,8 @@ const EditNetworkAcl: FC<Props> = ({ networkAcl, project }) => {
   const toastNotify = useToastNotification();
   const [section, updateSection] = useState<string>(slugify(GENERAL));
   const { canEditNetworkAcl } = useNetworkAclEntitlements();
+  const { hasStorageAndNetworkOperations } = useSupportedFeatures();
+  const eventQueue = useEventQueue();
 
   const queryClient = useQueryClient();
 
@@ -56,6 +60,18 @@ const EditNetworkAcl: FC<Props> = ({ networkAcl, project }) => {
       : "You do not have permission to edit this ACL",
   };
 
+  const baseUrl = `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acl/${encodeURIComponent(networkAcl.name)}`;
+
+  const notifySuccess = () => {
+    toastNotify.success(
+      <>
+        Network ACL{" "}
+        <ResourceLink type="network-acl" value={networkAcl.name} to={baseUrl} />{" "}
+        updated.
+      </>,
+    );
+  };
+
   const formik = useFormik<NetworkAclFormValues>({
     initialValues,
     enableReinitialize: true,
@@ -65,7 +81,7 @@ const EditNetworkAcl: FC<Props> = ({ networkAcl, project }) => {
         : toNetworkAcl(formik.values, networkAcl);
 
       updateNetworkAcl(saveObject, project)
-        .then(() => {
+        .then((operation) => {
           queryClient.invalidateQueries({
             queryKey: [
               queryKeys.projects,
@@ -75,28 +91,41 @@ const EditNetworkAcl: FC<Props> = ({ networkAcl, project }) => {
             ],
           });
 
-          toastNotify.success(
-            <>
-              Network ACL{" "}
-              <ResourceLink
-                type="network-acl"
-                value={networkAcl.name}
-                to={`${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acl/${encodeURIComponent(networkAcl.name)}`}
-              />{" "}
-              updated.
-            </>,
-          );
+          if (hasStorageAndNetworkOperations) {
+            toastNotify.info(
+              <>
+                Update of Network ACL{" "}
+                <ResourceLink
+                  type="network-acl"
+                  value={networkAcl.name}
+                  to={baseUrl}
+                />{" "}
+                has started.
+              </>,
+            );
+            eventQueue.set(
+              operation.metadata.id,
+              () => {
+                notifySuccess();
+              },
+              (msg) =>
+                toastNotify.failure(
+                  `Update of network ACL ${networkAcl.name} failed`,
+                  new Error(msg),
+                ),
+            );
+          } else {
+            notifySuccess();
+          }
         })
         .catch((e) => {
-          notify.failure("ACL update failed", e);
+          notify.failure("Update of network ACL failed", e);
         })
         .finally(() => {
           formik.setSubmitting(false);
         });
     },
   });
-
-  const baseUrl = `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/network-acl/${encodeURIComponent(networkAcl.name)}`;
 
   const setSection = (newSection: string) => {
     if (newSection === GENERAL) {
