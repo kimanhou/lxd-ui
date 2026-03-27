@@ -278,6 +278,19 @@ const Navigation: FC = () => {
                       </li>
                       <SideNavigationItem>
                         <NavLink
+                          to={`${ROOT_PATH}/ui/overview`}
+                          title={`Overview (${projectName})`}
+                          onClick={softToggleMenu}
+                        >
+                          <Icon
+                            className="is-light p-side-navigation__icon"
+                            name="switcher-dashboard"
+                          />{" "}
+                          Overview
+                        </NavLink>
+                      </SideNavigationItem>
+                      <SideNavigationItem>
+                        <NavLink
                           to={
                             isAllProjects
                               ? `${ROOT_PATH}/ui/all-projects/instances`

@@ -58,6 +58,7 @@ const CreateProject = lazy(async () => import("pages/projects/CreateProject"));
 const CreateStoragePool = lazy(
   async () => import("pages/storage/CreateStoragePool"),
 );
+const Dashboard = lazy(async () => import("pages/dashboard/Dashboard"));
 const EditNetworkForward = lazy(
   async () => import("pages/networks/EditNetworkForward"),
 );
@@ -629,6 +630,10 @@ const App: FC = () => {
         <Route
           path={`${ROOT_PATH}/ui/settings`}
           element={<ProtectedRoute outlet={<Settings />} />}
+        />
+        <Route
+          path={`${ROOT_PATH}/ui/overview`}
+          element={<ProtectedRoute outlet={<Dashboard />} />}
         />
         <Route path={`${ROOT_PATH}/ui/login`} element={<Login />} />
         <Route
