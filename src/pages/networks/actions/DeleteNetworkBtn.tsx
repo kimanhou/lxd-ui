@@ -17,6 +17,8 @@ import classnames from "classnames";
 import { useNetworkEntitlements } from "util/entitlements/networks";
 import NetworkRichChip from "../NetworkRichChip";
 import { ROOT_PATH } from "util/rootPath";
+import { useSupportedFeatures } from "context/useSupportedFeatures";
+import { useEventQueue } from "context/eventQueue";
 
 interface Props {
   network: LxdNetwork;
@@ -31,26 +33,56 @@ const DeleteNetworkBtn: FC<Props> = ({ network, project }) => {
   const navigate = useNavigate();
   const isSmallScreen = useIsScreenBelow();
   const { canDeleteNetwork } = useNetworkEntitlements();
+  const { hasStorageAndNetworkOperations } = useSupportedFeatures();
+  const eventQueue = useEventQueue();
+
+  const onSuccess = () => {
+    queryClient.invalidateQueries({
+      predicate: (query) =>
+        query.queryKey[0] === queryKeys.projects &&
+        query.queryKey[1] === project &&
+        query.queryKey[2] === queryKeys.networks,
+    });
+    navigate(`${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/networks`);
+    toastNotify.success(
+      <>
+        Network <ResourceLabel bold type="network" value={network.name} />{" "}
+        deleted.
+      </>,
+    );
+  };
 
   const handleDelete = () => {
     setLoading(true);
     deleteNetwork(network.name, project)
-      .then(() => {
-        queryClient.invalidateQueries({
-          predicate: (query) =>
-            query.queryKey[0] === queryKeys.projects &&
-            query.queryKey[1] === project &&
-            query.queryKey[2] === queryKeys.networks,
-        });
-        navigate(
-          `${ROOT_PATH}/ui/project/${encodeURIComponent(project)}/networks`,
-        );
-        toastNotify.success(
-          <>
-            Network <ResourceLabel bold type="network" value={network.name} />{" "}
-            deleted.
-          </>,
-        );
+      .then((operation) => {
+        if (hasStorageAndNetworkOperations && operation.metadata.id) {
+          toastNotify.info(
+            <>
+              Deletion of network{" "}
+              <NetworkRichChip
+                networkName={network.name}
+                projectName={project}
+              />{" "}
+              has started.
+            </>,
+          );
+
+          eventQueue.set(
+            operation.metadata.id,
+            () => {
+              setLoading(false);
+              onSuccess();
+            },
+            (msg) => {
+              setLoading(false);
+              notify.failure("Network deletion failed", new Error(msg));
+            },
+          );
+        } else {
+          setLoading(false);
+          onSuccess();
+        }
       })
       .catch((e) => {
         setLoading(false);
