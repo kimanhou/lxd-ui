@@ -4,6 +4,7 @@ import { checkDuplicateName } from "./helpers";
 import type { LxdAuthGroup, LxdIdentity } from "types/permissions";
 import type { ChangeSummary } from "./permissionIdentities";
 import { getIdentityName } from "./permissionIdentities";
+import type { FormPermission } from "types/forms/permissionGroup";
 
 export const testDuplicateGroupName = (
   controllerState: AbortControllerState,
@@ -178,4 +179,63 @@ export const getChangesInGroupsForIdentities = (
   }
 
   return identityGroupsChangeSummary;
+};
+
+const areArraysEqualIgnoreOrder = (
+  a: string[] = [],
+  b: string[] = [],
+): boolean => {
+  if (a.length !== b.length) return false;
+  const sortedA = [...a].sort();
+  const sortedB = [...b].sort();
+  return sortedA.every((val, index) => val === sortedB[index]);
+};
+
+const getPermissionFingerprint = (permission: FormPermission): string => {
+  const core = {
+    entity_type: permission.entity_type,
+    url: permission.url,
+    entitlement: permission.entitlement,
+    // Sort nested groups by name so their order doesn't trigger a change
+    groups: permission.groups
+      ? [...permission.groups].sort((a, b) => a.name.localeCompare(b.name))
+      : undefined,
+  };
+  return JSON.stringify(core);
+};
+
+export const arePermissionsModified = (
+  newPermissions: FormPermission[] = [],
+  oldPermissions: FormPermission[] = [],
+): boolean => {
+  const activeNew = newPermissions.filter((p) => !p.isRemoved);
+  const activeOld = oldPermissions.filter((p) => !p.isRemoved);
+
+  if (activeNew.length !== activeOld.length) return true;
+
+  const newSorted = activeNew.map(getPermissionFingerprint).sort();
+  const oldSorted = activeOld.map(getPermissionFingerprint).sort();
+
+  return newSorted.some((permStr, i) => permStr !== oldSorted[i]);
+};
+
+export const isGroupModified = (
+  newGroup: LxdAuthGroup,
+  oldGroup: LxdAuthGroup,
+): boolean => {
+  return (
+    newGroup.description !== oldGroup.description ||
+    arePermissionsModified(
+      newGroup.permissions || [],
+      oldGroup.permissions || [],
+    ) ||
+    !areArraysEqualIgnoreOrder(
+      newGroup.identity_provider_groups,
+      oldGroup.identity_provider_groups,
+    ) ||
+    !areArraysEqualIgnoreOrder(
+      newGroup.access_entitlements,
+      oldGroup.access_entitlements,
+    )
+  );
 };

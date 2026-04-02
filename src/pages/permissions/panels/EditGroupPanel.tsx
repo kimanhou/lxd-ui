@@ -17,7 +17,7 @@ import type { PermissionGroupFormValues } from "types/forms/permissionGroup";
 import GroupForm from "../forms/GroupForm";
 import { renameGroup, updateGroup } from "api/auth-groups";
 import { queryKeys } from "util/queryKeys";
-import { testDuplicateGroupName } from "util/permissionGroups";
+import { isGroupModified, testDuplicateGroupName } from "util/permissionGroups";
 import NotificationRow from "components/NotificationRow";
 import type { LxdAuthGroup, LxdIdentity } from "types/permissions";
 import classnames from "classnames";
@@ -134,7 +134,7 @@ const EditGroupPanel: FC<Props> = ({ group, onClose }) => {
       .required("Group name is required"),
   });
 
-  const saveIdentities = async () => {
+  const saveIdentities = async (originalGroupName: string) => {
     const added = identities.filter((id) => id.isAdded);
     const removed = identities.filter((id) => id.isRemoved);
 
@@ -147,6 +147,7 @@ const EditGroupPanel: FC<Props> = ({ group, onClose }) => {
     added.map((identity) => {
       identityPayload.push({
         ...identity,
+        // Use the new name from formik for additions
         groups: [...(identity.groups || []), formik.values.name],
       });
     });
@@ -154,13 +155,28 @@ const EditGroupPanel: FC<Props> = ({ group, onClose }) => {
     removed.map((identity) => {
       identityPayload.push({
         ...identity,
+        // Use the ORIGINAL name to filter out the group membership
         groups: [
-          ...(identity.groups || []).filter((g) => g !== formik.values.name),
+          ...(identity.groups || []).filter((g) => g !== originalGroupName),
         ],
       });
     });
 
     return updateIdentities(identityPayload);
+  };
+
+  const notifySuccess = (groupName: string) => {
+    toastNotify.success(
+      <>
+        Auth group{" "}
+        <ResourceLink
+          type="auth-group"
+          value={groupName}
+          to={`${ROOT_PATH}/ui/permissions/groups`}
+        />{" "}
+        updated.
+      </>,
+    );
   };
 
   const saveGroup = (values: PermissionGroupFormValues) => {
@@ -173,31 +189,25 @@ const EditGroupPanel: FC<Props> = ({ group, onClose }) => {
     };
 
     const mutation = async () => {
-      if (!canEditGroup(group)) {
-        return saveIdentities();
+      if (canEditGroup(group)) {
+        if (isNameChanged) {
+          await renameGroup(group?.name ?? "", values.name);
+        }
+
+        if (isGroupModified(groupPayload, group)) {
+          await updateGroup(groupPayload);
+        }
+      } else if (isNameChanged || isGroupModified(groupPayload, group)) {
+        throw new Error("You do not have permission to edit this group");
       }
 
-      return isNameChanged
-        ? renameGroup(group?.name ?? "", values.name)
-            .then(async () => updateGroup(groupPayload))
-            .then(saveIdentities)
-        : updateGroup(groupPayload).then(saveIdentities);
+      await saveIdentities(group.name);
     };
 
     mutation()
       .then(() => {
+        notifySuccess(values.name);
         closePanel();
-        toastNotify.success(
-          <>
-            Auth group{" "}
-            <ResourceLink
-              type="auth-group"
-              value={values.name}
-              to={`${ROOT_PATH}/ui/permissions/groups`}
-            />{" "}
-            updated.
-          </>,
-        );
       })
       .catch((e) => {
         notify.failure("Group update failed", e);
