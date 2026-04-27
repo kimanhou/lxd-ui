@@ -21,6 +21,7 @@ export const getSettingRow = (
   clusteredValue: ClusterSpecificValues,
   deleteUserSetting: (key: string) => void,
   settings?: LxdSettings,
+  comesFromModal = false,
 ): MainTableRow => {
   const isDefault = !Object.keys(settings?.config ?? {}).some(
     (key) => key === configField.key,
@@ -29,14 +30,18 @@ export const getSettingRow = (
   return {
     key: configField.key,
     columns: [
-      {
-        content: isNewCategory && (
-          <h2 className="p-heading--5">{configField.category}</h2>
-        ),
-        role: "cell",
-        className: "group",
-        "aria-label": "Group",
-      },
+      ...(!comesFromModal
+        ? [
+            {
+              content: isNewCategory && (
+                <h2 className="p-heading--5">{configField.category}</h2>
+              ),
+              role: "cell",
+              className: "group",
+              "aria-label": "Group",
+            },
+          ]
+        : []),
       {
         content: (
           <div className="key-cell">
@@ -57,6 +62,7 @@ export const getSettingRow = (
             value={value}
             clusteredValue={clusteredValue}
             onDelete={deleteUserSetting}
+            comesFromModal={comesFromModal}
           />
         ),
         role: "cell",

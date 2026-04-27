@@ -27,6 +27,7 @@ interface Props {
   onDelete: (key: string) => void;
   value?: string;
   clusteredValue?: ClusterSpecificValues;
+  comesFromModal?: boolean;
 }
 
 const SettingForm: FC<Props> = ({
@@ -34,6 +35,7 @@ const SettingForm: FC<Props> = ({
   onDelete,
   value,
   clusteredValue,
+  comesFromModal = false,
 }) => {
   const { isRestricted } = useAuth();
   const [isEditMode, setEditMode] = useState(false);
@@ -68,7 +70,13 @@ const SettingForm: FC<Props> = ({
 
     mutation
       .then(() => {
-        toastNotify.success(<>Setting {settingLabel} updated.</>);
+        const successNotification = <>Setting {settingLabel} updated.</>;
+        if (comesFromModal) {
+          notify.success(successNotification);
+        } else {
+          toastNotify.success(successNotification);
+        }
+
         setEditMode(false);
       })
       .catch((e) => {

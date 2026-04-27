@@ -41,6 +41,7 @@ import { getIdentityName } from "util/permissionIdentities";
 import CreateTLSIdentity from "./CreateTLSIdentity";
 import ResourceLabel from "components/ResourceLabel";
 import type { ResourceIconType } from "components/ResourceIcon";
+import OidcConfigurationBtn from "pages/permissions/OidcConfigurationBtn";
 import SsoNotification from "pages/permissions/SsoNotification";
 import { AUTH_METHOD } from "util/authentication";
 
@@ -312,6 +313,9 @@ const PermissionIdentities: FC = () => {
               )}
             </PageHeader.Left>
             <PageHeader.BaseActions>
+              <OidcConfigurationBtn
+              // isDisabled={!hasOidc}
+              />
               <CreateTlsIdentityBtn
                 openPanel={panelParams.openCreateTLSIdentity}
               />
