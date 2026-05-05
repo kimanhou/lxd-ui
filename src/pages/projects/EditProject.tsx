@@ -55,6 +55,14 @@ const EditProject: FC<Props> = ({ project }) => {
 
   const ProjectSchema = Yup.object().shape({
     name: Yup.string().required(),
+    replica_cluster: Yup.string().when("replica_mode", {
+      is: (mode: string) => mode === "leader" || mode === "standby",
+      then: (schema) =>
+        schema.required(
+          "Cluster selection is required when replica mode is Leader or Standby",
+        ),
+      otherwise: (schema) => schema.notRequired(),
+    }),
   });
 
   const editRestriction = canEditProject(project)

@@ -6,6 +6,7 @@ import { useIsClustered } from "context/useIsClustered";
 
 export const PROJECT_DETAILS = "Project details";
 export const RESOURCE_LIMITS = "Resource limits";
+export const REPLICA = "Replica";
 export const CLUSTERS = "Clusters";
 export const INSTANCES = "Instances";
 export const DEVICE_USAGE = "Device usage";
@@ -27,7 +28,7 @@ const ProjectFormMenu: FC<Props> = ({
   active,
   setActive,
 }) => {
-  const { hasImageRegistries } = useSupportedFeatures();
+  const { hasImageRegistries, hasReplicators } = useSupportedFeatures();
   const isClustered = useIsClustered();
 
   const menuItemProps = {
@@ -41,6 +42,7 @@ const ProjectFormMenu: FC<Props> = ({
         <ul className="p-side-navigation__list">
           <MenuItem label={PROJECT_DETAILS} {...menuItemProps} />
           <MenuItem label={RESOURCE_LIMITS} {...menuItemProps} />
+          {hasReplicators && <MenuItem label={REPLICA} {...menuItemProps} />}
           <li className="p-side-navigation__item">
             <Button
               type="button"

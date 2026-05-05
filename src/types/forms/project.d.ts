@@ -45,10 +45,8 @@ export interface ProjectResourceLimitsFormValues {
 }
 
 export interface ProjectReplicaFormValues {
-  replica?: {
-    cluster: string;
-    mode?: string;
-  };
+  replica_cluster?: string;
+  replica_mode?: string;
 }
 
 export interface InstanceRestrictionFormValues {

@@ -7,6 +7,7 @@ import {
   projectDetailRestrictionPayload,
 } from "pages/projects/forms/ProjectDetailsForm";
 import { resourceLimitsPayload } from "pages/projects/forms/ProjectResourceLimitsForm";
+import { replicaPayload } from "pages/projects/forms/ProjectReplicaForm";
 import { clusterRestrictionPayload } from "pages/projects/forms/ClusterRestrictionForm";
 import { instanceRestrictionPayload } from "pages/projects/forms/InstanceRestrictionForm";
 import { deviceUsageRestrictionPayload } from "pages/projects/forms/DeviceUsageRestrictionForm";
@@ -107,6 +108,9 @@ export const getProjectEditValues = (
 
     restricted_registries: project.config["restricted.registries"],
 
+    replica_cluster: project.config["replica.cluster"] || "",
+    replica_mode: project.config["replica.mode"] || "",
+
     editRestriction,
   };
 };
@@ -123,6 +127,7 @@ export const getProjectPayload = (
     config: {
       ...projectDetailRestrictionPayload(values),
       ...resourceLimitsPayload(values),
+      ...replicaPayload(values),
       ...(values.restricted
         ? {
             ...clusterRestrictionPayload(values),

@@ -82,6 +82,8 @@ const ProjectDetailsForm: FC<Props> = ({ formik, project, isEdit }) => {
   const hasNoProfiles = !formik.values.features_profiles;
   const hasIsolatedNetworks = formik.values.features_networks;
 
+  console.log("project", project, "formik", formik.values);
+
   return (
     <ScrollableForm>
       <Row>
