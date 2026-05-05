@@ -105,6 +105,9 @@ const ImageRegistriesList = lazy(
 const ImageRegistryDetail = lazy(
   async () => import("pages/images/ImageRegistryDetail"),
 );
+const ReplicatorsList = lazy(
+  async () => import("pages/replicators/ReplicatorsList"),
+);
 const StorageVolumeDetail = lazy(
   async () => import("pages/storage/StorageVolumeDetail"),
 );
@@ -214,6 +217,10 @@ const App: FC = () => {
         <Route
           path={`${ROOT_PATH}/ui/all-projects/instances`}
           element={<ProtectedRoute outlet={<InstanceList />} />}
+        />
+        <Route
+          path={`${ROOT_PATH}/ui/all-projects/replicators`}
+          element={<ProtectedRoute outlet={<ReplicatorsList />} />}
         />
         <Route
           path={`${ROOT_PATH}/ui/project/:project`}
@@ -518,6 +525,14 @@ const App: FC = () => {
         <Route
           path={`${ROOT_PATH}/ui/project/:project/local-images`}
           element={<ProtectedRoute outlet={<LocalImageList />} />}
+        />
+        <Route
+          path={`${ROOT_PATH}/ui/project/:project/replicators`}
+          element={
+            <ProtectedRoute
+              outlet={<ProjectLoader outlet={<ReplicatorsList />} />}
+            />
+          }
         />
         <Route
           path={`${ROOT_PATH}/ui/image-registries`}

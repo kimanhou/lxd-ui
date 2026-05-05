@@ -418,7 +418,8 @@ body.is-dark .lxd-icon {
 .create-image-from-instance-modal,
 .export-instance-modal,
 .export-volume-modal,
-.enable-clustering-modal {
+.enable-clustering-modal,
+.run-replicator-modal {
   .p-modal__dialog {
     @include large {
       width: 35rem;
