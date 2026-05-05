@@ -86,8 +86,12 @@ const Navigation: FC = () => {
 
   const isSmallScreen = useIsScreenBelow();
   const isAllProjects = projectName === ALL_PROJECTS;
-  const { hasCustomVolumeIso, hasAccessManagement, hasImageRegistries } =
-    useSupportedFeatures();
+  const {
+    hasCustomVolumeIso,
+    hasAccessManagement,
+    hasImageRegistries,
+    hasReplicators,
+  } = useSupportedFeatures();
   const { loggedInUserName, loggedInUserID } = useLoggedInUser();
   const [scroll, setScroll] = useState(false);
   const location = useLocation();
@@ -561,6 +565,18 @@ const Navigation: FC = () => {
                                   Placement
                                 </NavLink>
                               </SideNavigationItem>,
+                              hasReplicators && (
+                                <SideNavigationItem key="replicators">
+                                  <NavLink
+                                    to={`${ROOT_PATH}/ui/project/${encodeURIComponent(projectName)}/replicators`}
+                                    title={`Replicators (${projectName})`}
+                                    onClick={softToggleMenu}
+                                    className="accordion-nav-secondary"
+                                  >
+                                    Replicators
+                                  </NavLink>
+                                </SideNavigationItem>
+                              ),
                             ]}
                           </NavAccordion>
                         </SideNavigationItem>
