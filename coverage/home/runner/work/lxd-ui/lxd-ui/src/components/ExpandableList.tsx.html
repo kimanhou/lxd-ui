@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">64.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/40</span>
+                <span class='fraction'>25/39</span>
             </div>
         
             
@@ -97,23 +97,23 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -125,12 +125,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">979x</span>
-<span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">938x</span>
+<span class="cline-any cline-yes">363x</span>
+<span class="cline-any cline-yes">363x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, type FC, type ReactNode } from "react";
 import { Button } from "@canonical/react-components";
 &nbsp;
@@ -141,10 +141,10 @@ interface Props {
   displayCount?: number;
 }
 &nbsp;
-const ExpandableList: FC&lt;Props&gt; = <span class="fstat-no" title="function not covered" >({</span> items, displayCount = DISPLAY_COUNT }) =&gt; {
+const <span class="fstat-no" title="function not covered" >ExpandableList: FC&lt;Props&gt; = ({</span> items, displayCount = DISPLAY_COUNT }) =&gt; {
   const [currentDisplayCount, setCurrentDisplayCount] = <span class="cstat-no" title="statement not covered" >useState(displayCount);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;&gt;
       {items.slice(0, currentDisplayCount)}
       {currentDisplayCount &lt; items.<span class="branch-0 cbranch-no" title="branch not covered" >length &amp;&amp; (</span>
@@ -152,7 +152,7 @@ const ExpandableList: FC&lt;Props&gt; = <span class="fstat-no" title="function n
 <span class="cstat-no" title="statement not covered" >          appearance="link"</span>
 <span class="cstat-no" title="statement not covered" >          className="u-no-margin--bottom"</span>
 <span class="cstat-no" title="statement not covered" >          small</span>
-<span class="cstat-no" title="statement not covered" >          onClick={<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >          onClick={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >            setCurrentDisplayCount(items.length);</span></span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >            e.stopPropagation();</span></span>
 <span class="cstat-no" title="statement not covered" >          }}</span>
@@ -172,7 +172,7 @@ export default ExpandableList;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-01T15:28:42.563Z
+                at 2026-06-01T17:12:28.366Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>
