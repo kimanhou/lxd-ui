@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for home/runner/work/lxd-ui/lxd-ui/src/util/instanceBoot.tsx</title>
+    <title>Code coverage report for home/runner/work/lxd-ui/lxd-ui/src/util/editMode.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../../../../../index.html">All files</a> / <a href="index.html">home/runner/work/lxd-ui/lxd-ui/src/util</a> instanceBoot.tsx</h1>
+        <h1><a href="../../../../../../../index.html">All files</a> / <a href="index.html">home/runner/work/lxd-ui/lxd-ui/src/util</a> editMode.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -70,49 +70,19 @@
 <a name='L5'></a><a href='#L5'>5</a>
 <a name='L6'></a><a href='#L6'>6</a>
 <a name='L7'></a><a href='#L7'>7</a>
-<a name='L8'></a><a href='#L8'>8</a>
-<a name='L9'></a><a href='#L9'>9</a>
-<a name='L10'></a><a href='#L10'>10</a>
-<a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a>
-<a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">348x</span>
-<span class="cline-any cline-yes">359x</span>
-<span class="cline-any cline-yes">359x</span>
-<span class="cline-any cline-yes">359x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-yes">106x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { BootFormValues } from "types/forms/instanceAndProfile";
-import { getInstanceField } from "util/instanceConfigFields";
+<a name='L8'></a><a href='#L8'>8</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">237x</span>
+<span class="cline-any cline-yes">237x</span>
+<span class="cline-any cline-yes">237x</span>
+<span class="cline-any cline-yes">318x</span>
+<span class="cline-any cline-yes">65x</span>
+<span class="cline-any cline-yes">65x</span>
+<span class="cline-any cline-yes">318x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { ConfigurationRowFormikProps } from "types/forms/configurationRow";
 &nbsp;
-export const bootPayload = (values: BootFormValues) =&gt; {
-  return {
-    [getInstanceField("boot_autostart")]: values.boot_autostart?.toString(),
-    [getInstanceField("boot_autostart_delay")]:
-      values.boot_autostart_delay?.toString(),
-    [getInstanceField("boot_autostart_priority")]:
-      values.boot_autostart_priority?.toString(),
-    [getInstanceField("boot_host_shutdown_timeout")]:
-      values.boot_host_shutdown_timeout?.toString(),
-    [getInstanceField("boot_mode")]: values.boot_mode?.toString(),
-    [getInstanceField("boot_stop_priority")]:
-      values.boot_stop_priority?.toString(),
-  };
+export const ensureEditMode = <span class="fstat-no" title="function not covered" >(f</span>ormik: ConfigurationRowFormikProps) =&gt; {
+<span class="cstat-no" title="statement not covered" >  if (formik.values.readOnly) {</span>
+<span class="cstat-no" title="statement not covered" >    formik.setFieldValue("readOnly", false);</span>
+  }
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -121,7 +91,7 @@ export const bootPayload = (values: BootFormValues) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-29T09:53:19.297Z
+                at 2026-06-01T14:29:41.845Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>
