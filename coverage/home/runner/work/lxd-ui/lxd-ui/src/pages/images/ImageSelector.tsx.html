@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.06% </span>
+                <span class="strong">87.65% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>428/486</span>
+                <span class='fraction'>426/486</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.06% </span>
+                <span class="strong">87.65% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>428/486</span>
+                <span class='fraction'>426/486</span>
             </div>
         
             
@@ -642,9 +642,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">178x</span>
+<span class="cline-any cline-yes">178x</span>
+<span class="cline-any cline-yes">178x</span>
 <span class="cline-any cline-yes">178x</span>
 <span class="cline-any cline-yes">178x</span>
 <span class="cline-any cline-yes">178x</span>
@@ -712,7 +712,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-yes">24x</span>
@@ -902,8 +902,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1938x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
@@ -989,7 +989,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
@@ -1017,8 +1017,8 @@
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">76x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-yes">89x</span>
@@ -1373,7 +1373,7 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
               id="imageFilterDistribution"
               label="Distribution"
               name="distribution"
-              onChange={<span class="fstat-no" title="function not covered" >(v) =&gt; {</span>
+<span class="fstat-no" title="function not covered" >              onChange={(v) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                setOs(v.target.value);</span>
 <span class="cstat-no" title="statement not covered" >                setRelease("");</span>
 <span class="cstat-no" title="statement not covered" >              }}</span>
@@ -1384,11 +1384,11 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
               id="imageFilterRelease"
               label="Release"
               name="release"
-              onChange={<span class="fstat-no" title="function not covered" >(v) =&gt; {</span>
+<span class="fstat-no" title="function not covered" >              onChange={(v) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                setRelease(v.target.value);</span>
 <span class="cstat-no" title="statement not covered" >              }}</span>
-              options={getOptionList(
-<span class="fstat-no" title="function not covered" >                (item) =&gt; item.release,</span>
+              options={<span class="fstat-no" title="function not covered" >getOptionList(</span>
+<span class="cstat-no" title="statement not covered" >                (item) =&gt; item.release,</span>
                 (item) =&gt; item.os === os,
               )}
               value={release}
@@ -1398,7 +1398,7 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
               id="imageFilterVariant"
               label="Variant"
               name="variant"
-              onChange={<span class="fstat-no" title="function not covered" >(v) =&gt; {</span>
+<span class="fstat-no" title="function not covered" >              onChange={(v) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                setVariant(v.target.value);</span>
 <span class="cstat-no" title="statement not covered" >              }}</span>
               options={[
@@ -1422,7 +1422,7 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
               id="imageFilterArchitecture"
               label="Architecture"
               name="architecture"
-              onChange={<span class="fstat-no" title="function not covered" >(v) =&gt; {</span>
+<span class="fstat-no" title="function not covered" >              onChange={(v) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                setArch(v.target.value);</span>
 <span class="cstat-no" title="statement not covered" >              }}</span>
               options={archAll.map((item) =&gt; {
@@ -1457,7 +1457,7 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
               aria-label="Only show cached images"
               checked={hideRemote}
               label="Show only cached images"
-              onChange={<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="fstat-no" title="function not covered" >              onChange={() =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                setHideRemote((prev) =&gt; !prev);</span>
 <span class="cstat-no" title="statement not covered" >              }}</span>
             /&gt;
@@ -1469,13 +1469,13 @@ const ImageSelector: FC&lt;Props&gt; = ({ onSelect, onClose }) =&gt; {
 <span class="cstat-no" title="statement not covered" >              &lt;Notification</span>
 <span class="cstat-no" title="statement not covered" >                severity="negative"</span>
 <span class="cstat-no" title="statement not covered" >                title="Failed loading images"</span>
-<span class="cstat-no" title="statement not covered" >                onDismiss={<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >                onDismiss={() =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >                  setHideError(true);</span>
 <span class="cstat-no" title="statement not covered" >                }}</span>
 <span class="cstat-no" title="statement not covered" >              &gt;</span>
 <span class="cstat-no" title="statement not covered" >                {error}</span>
 <span class="cstat-no" title="statement not covered" >              &lt;/Notification&gt;</span>
-            ) : (
+<span class="cstat-no" title="statement not covered" >            ) : (</span>
               &lt;div&gt;
                 &lt;SearchBox
                   autoFocus
@@ -1528,7 +1528,7 @@ export default ImageSelector;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-16T09:34:03.770Z
+                at 2026-06-16T10:16:51.623Z
             </div>
         <script src="../../../../../../../../prettify.js"></script>
         <script>
