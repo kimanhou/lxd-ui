@@ -20,6 +20,16 @@
       flex: 1;
     }
 
+    &.cluster {
+      .p-card__content {
+        display: flex;
+        gap: calc($sph--x-large * 2);
+        > div {
+          flex: 1;
+        }
+      }
+    }
+
     &.instances {
       max-width: calc(50% - $sph--large / 2);
       min-width: 20rem;
