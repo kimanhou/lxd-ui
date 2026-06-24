@@ -28,6 +28,7 @@ import { useLoggedInUser } from "context/useLoggedInUser";
 import { useSettings } from "context/useSettings";
 import { useIsScreenBelow } from "context/useIsScreenBelow";
 import { useIsClustered } from "context/useIsClustered";
+import { useFeatureFlags } from "context/useFeatureFlags";
 import { getReportBugURL } from "util/reportBug";
 import { AUTH_METHOD, authIcon } from "util/authentication";
 import DocLink from "components/DocLink";
@@ -97,6 +98,7 @@ const Navigation: FC = () => {
   const [openNavMenus, setOpenNavMenus] = useState<AccordionNavMenu[]>(() =>
     initialiseOpenNavMenus(location),
   );
+  const { isDashboardEnabled } = useFeatureFlags();
 
   const onGenerate = location.pathname.includes("certificate-generate");
   const onTrustToken = location.pathname.includes("certificate-add");
@@ -276,19 +278,21 @@ const Navigation: FC = () => {
                           activeProject={projectName}
                         />
                       </li>
-                      <SideNavigationItem>
-                        <NavLink
-                          to={`${ROOT_PATH}/ui/overview`}
-                          title={`Overview (${projectName})`}
-                          onClick={softToggleMenu}
-                        >
-                          <Icon
-                            className="is-light p-side-navigation__icon"
-                            name="switcher-dashboard"
-                          />{" "}
-                          Overview
-                        </NavLink>
-                      </SideNavigationItem>
+                      {isDashboardEnabled() && (
+                        <SideNavigationItem>
+                          <NavLink
+                            to={`${ROOT_PATH}/ui/overview`}
+                            title={`Overview (${projectName})`}
+                            onClick={softToggleMenu}
+                          >
+                            <Icon
+                              className="is-light p-side-navigation__icon"
+                              name="switcher-dashboard"
+                            />{" "}
+                            Overview
+                          </NavLink>
+                        </SideNavigationItem>
+                      )}
                       <SideNavigationItem>
                         <NavLink
                           to={
