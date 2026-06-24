@@ -3,7 +3,7 @@ import { Card } from "@canonical/react-components";
 
 const StorageVolumesDashboardContainer: FC = () => {
   return (
-    <Card className="dashboard-card storage-volumes" title="Storage Volumes">
+    <Card className="overview-card storage-volumes" title="Storage Volumes">
       <p>No. of Storage Volumes</p>
     </Card>
   );

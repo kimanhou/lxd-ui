@@ -21,14 +21,14 @@ const Dashboard: FC = () => {
         </PageHeader>
       }
     >
-      <Row className="dashboard-row">
+      <Row className="overview-row">
         <ClusterDashboardContainer />
         <InstancesDashboardContainer />
       </Row>
       <Row>
         <ProjectsDashboardContainer />
       </Row>
-      <Row className="dashboard-row">
+      <Row className="overview-row">
         <StoragePoolsDashboardContainer />
         <StorageVolumesDashboardContainer />
       </Row>

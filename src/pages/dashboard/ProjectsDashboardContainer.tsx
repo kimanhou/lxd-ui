@@ -3,7 +3,7 @@ import { Card } from "@canonical/react-components";
 
 const ProjectsDashboardContainer: FC = () => {
   return (
-    <Card className="dashboard-card projects" title="Projects">
+    <Card className="overview-card projects" title="Projects">
       <p>No. of Projects</p>
     </Card>
   );
