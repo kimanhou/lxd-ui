@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Card } from "@canonical/react-components";
 
-const StorageVolumesDashboardContainer: FC = () => {
+const StorageVolumesCard: FC = () => {
   return (
     <Card className="overview-card storage-volumes" title="Storage Volumes">
       <p>No. of Storage Volumes</p>
@@ -9,4 +9,4 @@ const StorageVolumesDashboardContainer: FC = () => {
   );
 };
 
-export default StorageVolumesDashboardContainer;
+export default StorageVolumesCard;

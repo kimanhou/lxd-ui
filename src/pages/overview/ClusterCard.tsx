@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Card } from "@canonical/react-components";
 
-const ClusterDashboardContainer: FC = () => {
+const ClusterCard: FC = () => {
   return (
     <Card className="overview-card cluster" title="Cluster">
       <p>Memory usage</p>
@@ -12,4 +12,4 @@ const ClusterDashboardContainer: FC = () => {
   );
 };
 
-export default ClusterDashboardContainer;
+export default ClusterCard;

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Card } from "@canonical/react-components";
 
-const ProjectsDashboardContainer: FC = () => {
+const ProjectsCard: FC = () => {
   return (
     <Card className="overview-card projects" title="Projects">
       <p>No. of Projects</p>
@@ -9,4 +9,4 @@ const ProjectsDashboardContainer: FC = () => {
   );
 };
 
-export default ProjectsDashboardContainer;
+export default ProjectsCard;

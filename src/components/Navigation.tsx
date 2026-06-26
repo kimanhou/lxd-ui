@@ -98,7 +98,7 @@ const Navigation: FC = () => {
   const [openNavMenus, setOpenNavMenus] = useState<AccordionNavMenu[]>(() =>
     initialiseOpenNavMenus(location),
   );
-  const { isDashboardEnabled } = useFeatureFlags();
+  const { isOverviewEnabled } = useFeatureFlags();
 
   const onGenerate = location.pathname.includes("certificate-generate");
   const onTrustToken = location.pathname.includes("certificate-add");
@@ -278,7 +278,7 @@ const Navigation: FC = () => {
                           activeProject={projectName}
                         />
                       </li>
-                      {isDashboardEnabled() && (
+                      {isOverviewEnabled() && (
                         <SideNavigationItem>
                           <NavLink
                             to={`${ROOT_PATH}/ui/overview`}

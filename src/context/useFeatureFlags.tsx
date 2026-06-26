@@ -1,15 +1,15 @@
 import React, { createContext, type ReactNode, useContext } from "react";
 
 // To add a new feature flag, add it to the FeatureFlag type below
-// For example: export type FeatureFlag = "DASHBOARD" | "NEW_FEATURE";
+// For example: export type FeatureFlag = "OVERVIEW" | "NEW_FEATURE";
 // Then add a corresponding function in the FeatureFlagProvider
 // For example: const isNewFeatureEnabled = () => isFeatureEnabled("NEW_FEATURE");
-export type FeatureFlag = "DASHBOARD";
+export type FeatureFlag = "OVERVIEW";
 
 const LOCAL_STORAGE_PREFIX = "lxdui_ff_";
 
 interface FeatureFlagContextType {
-  isDashboardEnabled: () => boolean;
+  isOverviewEnabled: () => boolean;
 }
 
 const FeatureFlagContext = createContext<FeatureFlagContextType | undefined>(
@@ -23,10 +23,10 @@ export const FeatureFlagProvider: React.FC<{ children: ReactNode }> = ({
     return localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${flag}`) === "true";
   };
 
-  const isDashboardEnabled = () => isFeatureEnabled("DASHBOARD");
+  const isOverviewEnabled = () => isFeatureEnabled("OVERVIEW");
 
   return (
-    <FeatureFlagContext.Provider value={{ isDashboardEnabled }}>
+    <FeatureFlagContext.Provider value={{ isOverviewEnabled }}>
       {children}
     </FeatureFlagContext.Provider>
   );

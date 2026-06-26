@@ -15,12 +15,12 @@ import type { LxdInstance, LxdInstanceStatus } from "types/instance";
 import { capitalizeFirstLetter } from "util/helpers";
 import { ROOT_PATH } from "util/rootPath";
 
-interface InstancesDashboardStatusProps {
+interface InstancesOverviewStatusProps {
   status: "running" | "stopped" | "pending" | "error";
   instances: LxdInstance[];
 }
 
-const InstancesDashboardStatus: FC<InstancesDashboardStatusProps> = ({
+const InstancesOverviewStatus: FC<InstancesOverviewStatusProps> = ({
   status,
   instances,
 }) => {
@@ -64,7 +64,7 @@ const INITIAL_ACCUMULATOR: InstanceAccumulator = {
   virtualMachines: [],
 };
 
-const InstancesDashboardContainer: FC = () => {
+const InstancesCard: FC = () => {
   const { data: instances = [], error, isLoading } = useInstances(null);
   const { isAuthenticated } = useAuth();
   const isDark = isAuthenticated || isDarkTheme(loadTheme());
@@ -160,19 +160,19 @@ const InstancesDashboardContainer: FC = () => {
   return (
     <Card className={cardClassName} title={cardTitle}>
       <div className="group-by-status-container">
-        <InstancesDashboardStatus
+        <InstancesOverviewStatus
           status="running"
           instances={runningInstances}
         />
-        <InstancesDashboardStatus
+        <InstancesOverviewStatus
           status="stopped"
           instances={stoppedInstances}
         />
-        <InstancesDashboardStatus
+        <InstancesOverviewStatus
           status="pending"
           instances={pendingInstances}
         />
-        <InstancesDashboardStatus status="error" instances={errorInstances} />
+        <InstancesOverviewStatus status="error" instances={errorInstances} />
       </div>
 
       <div className="group-by-type-container">
@@ -216,4 +216,4 @@ const InstancesDashboardContainer: FC = () => {
   );
 };
 
-export default InstancesDashboardContainer;
+export default InstancesCard;

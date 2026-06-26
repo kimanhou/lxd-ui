@@ -59,7 +59,7 @@ const CreateProject = lazy(async () => import("pages/projects/CreateProject"));
 const CreateStoragePool = lazy(
   async () => import("pages/storage/CreateStoragePool"),
 );
-const Dashboard = lazy(async () => import("pages/dashboard/Dashboard"));
+const Overview = lazy(async () => import("pages/overview/Overview"));
 const EditNetworkForward = lazy(
   async () => import("pages/networks/EditNetworkForward"),
 );
@@ -149,7 +149,7 @@ const App: FC = () => {
   } = useAuth();
   const notify = useNotify();
   const { data: settings } = useSettings();
-  const { isDashboardEnabled } = useFeatureFlags();
+  const { isOverviewEnabled } = useFeatureFlags();
   const hasOidc = settings?.auth_methods?.includes(AUTH_METHOD.OIDC);
   const hasCertificate = settings?.client_certificate;
   setFavicon();
@@ -633,10 +633,10 @@ const App: FC = () => {
           path={`${ROOT_PATH}/ui/settings`}
           element={<ProtectedRoute outlet={<Settings />} />}
         />
-        {isDashboardEnabled() && (
+        {isOverviewEnabled() && (
           <Route
             path={`${ROOT_PATH}/ui/overview`}
-            element={<ProtectedRoute outlet={<Dashboard />} />}
+            element={<ProtectedRoute outlet={<Overview />} />}
           />
         )}
         <Route path={`${ROOT_PATH}/ui/login`} element={<Login />} />
