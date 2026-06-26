@@ -15,8 +15,8 @@
     }
 
     &.cluster,
-    &.storage-pools,
-    &.storage-volumes {
+    &.storage,
+    &.memory {
       flex: 1;
     }
 
