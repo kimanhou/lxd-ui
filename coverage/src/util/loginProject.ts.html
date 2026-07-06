@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>24/26</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
@@ -97,40 +97,40 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">375x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">7471x</span>
-<span class="cline-any cline-yes">7471x</span>
-<span class="cline-any cline-yes">7471x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">388x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">7712x</span>
+<span class="cline-any cline-yes">7712x</span>
+<span class="cline-any cline-yes">7712x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">7407x</span>
-<span class="cline-any cline-yes">7415x</span>
-<span class="cline-any cline-yes">7407x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">7646x</span>
+<span class="cline-any cline-yes">7654x</span>
+<span class="cline-any cline-yes">7646x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">7407x</span>
-<span class="cline-any cline-yes">7407x</span>
-<span class="cline-any cline-yes">7407x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">380x</span>
-<span class="cline-any cline-yes">7370x</span>
-<span class="cline-any cline-yes">7370x</span>
+<span class="cline-any cline-yes">7646x</span>
+<span class="cline-any cline-yes">7646x</span>
+<span class="cline-any cline-yes">7646x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-yes">7606x</span>
+<span class="cline-any cline-yes">7606x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">7376x</span>
+<span class="cline-any cline-yes">7612x</span>
 <span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">7330x</span>
-<span class="cline-any cline-yes">7330x</span>
-<span class="cline-any cline-yes">7330x</span>
+<span class="cline-any cline-yes">7566x</span>
+<span class="cline-any cline-yes">7566x</span>
+<span class="cline-any cline-yes">7566x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { LxdProject } from "types/project";
 import { ALL_PROJECTS } from "util/projects";
 &nbsp;
@@ -148,7 +148,7 @@ export const saveLoginProject = (project: string): void =&gt; {
 export const getDefaultProject = (projects: LxdProject[]) =&gt; {
   const project =
     projects.length &lt; 1 || projects.find((p) =&gt; p.name === "default")
-      ? <span class="branch-0 cbranch-no" title="branch not covered" >"default"</span>
+      ? "default"
 <span class="cstat-no" title="statement not covered" >      : projects[0].name;</span>
 &nbsp;
   return project;
@@ -156,7 +156,7 @@ export const getDefaultProject = (projects: LxdProject[]) =&gt; {
 &nbsp;
 export const getLoginProject = (projects: LxdProject[]) =&gt; {
   const savedProject = loadLoginProject();
-  if (savedProject === ALL_PROJECTS) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+  if (savedProject === ALL_PROJECTS) {
 <span class="cstat-no" title="statement not covered" >    return ALL_PROJECTS;</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
   if (savedProject &amp;&amp; projects.find((p) =&gt; p.name === savedProject)) {
@@ -172,7 +172,7 @@ export const getLoginProject = (projects: LxdProject[]) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-03T08:38:36.325Z
+                at 2026-07-06T13:55:24.068Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
