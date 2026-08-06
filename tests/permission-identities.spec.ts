@@ -5,6 +5,8 @@ import {
   randomGroupName,
 } from "./helpers/permission-groups";
 import {
+  createIdentity,
+  deleteIdentity,
   identityBar,
   identityFoo,
   randomIdentityName,
@@ -22,6 +24,7 @@ import {
   undoChange,
   skipIfFineGrainedAuthorisationNotSupported,
   skipIfBearerIdentitiesNotSupported,
+  supportsBearerIdentities,
 } from "./helpers/permissions";
 import { dismissNotification } from "./helpers/notification";
 
@@ -174,4 +177,27 @@ test("reissue a new token for bearer identity", async ({
     `Identity ${identity} (${identityType}, ${identityId}) deleted.`,
   );
   await expect(identityRow).not.toBeVisible();
+});
+
+test("create one identity of each type", async ({ page, lxdVersion }) => {
+  skipIfFineGrainedAuthorisationNotSupported(lxdVersion);
+
+  const tlsName = randomIdentityName();
+  const bearerClientName = randomIdentityName();
+  const bearerDevlxdName = randomIdentityName();
+  const clusterLinkName = randomIdentityName();
+
+  await createIdentity(page, tlsName, "TLS Certificate");
+  if (supportsBearerIdentities(lxdVersion)) {
+    await createIdentity(page, bearerClientName, "Bearer token (Main API)");
+    await createIdentity(page, bearerDevlxdName, "Bearer token (DevLXD)");
+    await createIdentity(page, clusterLinkName, "Cluster link certificate");
+  }
+
+  await deleteIdentity(page, tlsName);
+  if (supportsBearerIdentities(lxdVersion)) {
+    await deleteIdentity(page, bearerClientName);
+    await deleteIdentity(page, bearerDevlxdName);
+    await deleteIdentity(page, clusterLinkName);
+  }
 });

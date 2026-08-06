@@ -2,6 +2,7 @@ import type { Page } from "@playwright/test";
 import { expect } from "../fixtures/lxd-test";
 import { gotoURL } from "./navigate";
 import { randomNameSuffix } from "./name";
+import { dismissNotification } from "./notification";
 
 // These identities are created by the setup_test script in tests/scripts
 export const identityBar = "bar@bar.com";
@@ -83,4 +84,58 @@ export const issueTokenFromEditPanel = async (
   await expect(page.getByText("token issued successfully")).toBeVisible();
 
   return getDisplayedToken(page);
+};
+
+const identityTypeToTableType: Record<
+  | "TLS Certificate"
+  | "Bearer token (Main API)"
+  | "Bearer token (DevLXD)"
+  | "Cluster link certificate",
+  string
+> = {
+  "TLS Certificate": "Client certificate",
+  "Bearer token (Main API)": "Client token bearer",
+  "Bearer token (DevLXD)": "DevLXD token bearer",
+  "Cluster link certificate": "Cluster link certificate",
+};
+
+export const createIdentity = async (
+  page: Page,
+  name: string,
+  identityType:
+    | "TLS Certificate"
+    | "Bearer token (Main API)"
+    | "Bearer token (DevLXD)"
+    | "Cluster link certificate",
+) => {
+  await visitIdentities(page);
+  await page.getByRole("button", { name: "Create identity" }).click();
+  await page.getByText(identityType, { exact: true }).click();
+  await page.getByPlaceholder("Enter name").fill(name);
+  await page
+    .getByLabel("Side panel")
+    .getByRole("button", { name: "Create identity" })
+    .click();
+
+  const modal = page.getByRole("dialog");
+  await expect(modal).toContainText(`Identity ${name} created successfully`);
+
+  await modal
+    .getByRole("checkbox", { name: "I have copied the token" })
+    .check({ force: true });
+  await modal.getByRole("button", { name: "Done" }).click();
+
+  const identityRow = page.getByRole("row").filter({ hasText: name });
+  await expect(identityRow).toBeVisible();
+  await expect(identityRow).toContainText(
+    identityTypeToTableType[identityType],
+  );
+};
+
+export const deleteIdentity = async (page: Page, name: string) => {
+  await visitIdentities(page);
+  const row = page.getByRole("row").filter({ hasText: name });
+  await row.getByRole("button", { name: "Delete identity" }).click();
+  await page.getByRole("button", { name: "Delete", exact: true }).click();
+  await dismissNotification(page, `${name}`);
 };
