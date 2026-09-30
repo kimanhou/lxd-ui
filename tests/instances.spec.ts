@@ -289,13 +289,13 @@ test("instance search by user key", async ({ page }) => {
   const lxc = getLxcCmd();
   runCommand(`${lxc} config set ${instance} user.team blue`);
 
-  await gotoURL(page, "/ui/project/default");
+  await gotoURL(page, "/ui/project/default/instances");
   await searchEntityListPage(page, "user.team=blue");
   await expect(
     page.getByRole("link", { name: instance }).first(),
   ).toBeVisible();
 
-  await gotoURL(page, "/ui/project/default");
+  await gotoURL(page, "/ui/project/default/instances");
   await searchEntityListPage(page, "user.team=red");
   await expect(
     page.getByText("No instance found matching this search"),
