@@ -95,6 +95,7 @@ const ImageRegistrySelector: FC<Props> = ({ formik, openOnMount = false }) => {
         hasSelectedItemsFirst={false}
         dropdownClassName="restricted-image-registries__dropdown"
         variant="condensed"
+        scrollOverflow={true}
       />
     </div>
   );

@@ -578,6 +578,11 @@
   .multi-select__dropdown {
     max-height: 60vh;
     overflow-y: auto;
+
+    &.restricted-image-registries__dropdown {
+      max-height: none;
+      overflow-y: visible;
+    }
   }
 }
 
